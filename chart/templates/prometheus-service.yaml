@@ -1,0 +1,17 @@
+{{- if .Values.prometheus.create }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "nginx-ingress.serviceName" . }}-prometheus
+  labels:
+    {{- include "nginx-ingress.labels" . | nindent 4 }}
+spec:
+  selector:
+    app:  {{ include "nginx-ingress.appName" . }}
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: prometheus
+    port: {{ .Values.prometheus.port }}
+    protocol: TCP
+{{- end }}

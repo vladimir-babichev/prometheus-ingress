@@ -1,0 +1,16 @@
+{{- if .Values.prometheus.create }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "nginx-ingress.serviceName" . }}
+  labels:
+    release: prom-stack # Hack!
+    {{- include "nginx-ingress.labels" . | nindent 4 }}
+spec:
+  endpoints:
+  - interval: "{{ .Values.prometheus.scanInterval }}"
+    port: "prometheus"
+  selector:
+    matchLabels:
+      app:  {{ include "nginx-ingress.appName" . }}
+{{- end }}
