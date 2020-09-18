@@ -4,7 +4,7 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "nginx-ingress.serviceName" . }}
   labels:
-    release: prom-stack # Hack!
+    release: prometheus-operator # Hack!
     {{- include "nginx-ingress.labels" . | nindent 4 }}
 spec:
   endpoints:
